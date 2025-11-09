@@ -135,36 +135,4 @@ Looking at the dendrogram, the cars naturally fall into three broad groups:
 The clustering analysis shows that the mtcars dataset groups cars into categories that align with real‑world automotive classes: economy cars, performance cars, and luxury sedans.  
 This highlights how unsupervised learning can uncover meaningful structure in classic datasets, even without labels. It also confirms that features like weight, horsepower, and cylinder count are key drivers of these groupings.
 
-## 🤖 AI Extension: Random Forest Validation
 
-To validate the consistency of our clustering, we train a Random Forest classifier using known labels. This helps assess whether the unsupervised groups align with real-world categories like transmission type (`am`).
-
-### 🔧 Preparing the Data
-
-```r
-# Add known labels to the scaled feature set
-rf_data <- dfcars %>%
-  mutate(am = mtcars$am, cyl = mtcars$cyl)
-
-library(randomForest)
-
-# Train model to predict transmission type
-rf_model <- randomForest(factor(am) ~ mpg + cyl + disp + hp + wt + qsec + gear + carb,
-                         data = rf_data,
-                         importance = TRUE,
-                         ntree = 500)
-
-# Print model summary
-print(rf_model)
-
-# View importance scores
-importance(rf_model)
-
-# Plot variable importance
-varImpPlot(rf_model)
-
-## Interpretation 
-
-- Accuracy: High predictive accuracy confirms that features used in clustering are informative.
-- Top Predictors: Weight (wt), horsepower (hp), and cylinder count (cyl) are key drivers—consistent with cluster logic.
-- Consistency: Clusters align well with transmission labels, validating the unsupervised structure.
