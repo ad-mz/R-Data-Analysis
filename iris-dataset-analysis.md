@@ -1,18 +1,14 @@
-iris-dataset-analysis
-================
-Adrian M
-2023-10-14
 
-# Introduction
+## Introduction
 
-Edgar Anderson’s Iris Data
+The Iris dataset is a classic example used in data analysis.  
+It contains measurements of petals and sepals from three different iris species: setosa, versicolor, and virginica.  
 
-This famous (Fisher’s or Anderson’s) iris data set gives the
-measurements in centimeters of the variables sepal length and width and
-petal length and width, respectively, for 50 flowers from each of 3
-species of iris. The species are Iris setosa, versicolor, and virginica.
+The goal of this project is simple: explore the data, visualize the differences between species, and see which measurements are most useful for telling them apart.  
+By walking through a few plots and comparisons, we can get a clear picture of how the features relate to each other and what they reveal about the species.
 
-Setting up the environment
+
+# Methods (tools/packages used)
 
 ?iris
 
@@ -57,7 +53,10 @@ head(df)
     ## 5          5.0         3.6          1.4         0.2  setosa
     ## 6          5.4         3.9          1.7         0.4  setosa
 
-Trying some univariate analysis and visualize this using `qplot`
+
+# Exploration (scatterplots, histograms, boxplots)
+
+Univariate analysis and visualize using `qplot`
 
 ?qplot
 
@@ -72,7 +71,8 @@ qplot(Species,
 ![](iris-dataset-analysis_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 `qplot` automatically decides which plot to use based on supplied
-variables. 50 records per species as the data set introduction
+variables. 
+50 records per species as the data set introduction
 described.
 
 Trying `qplot` to show a scatterplot
@@ -96,9 +96,7 @@ qplot(Petal.Length,
 
 ![](iris-dataset-analysis_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-Looks good but documentation says `qplot` is deprecated (no longer
-useful or better options exist) In this case, I’m going to try and
-explore ggplot instead
+Since qplot is deprecated, I transitioned to ggplot for more control and reproducibility
 
 ?ggplot
 
@@ -110,8 +108,8 @@ ggplot(data = df,
 ```
 
 ![](iris-dataset-analysis_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
-It’s blank. Of course since the only the `aes()` or the aesthetic is
-present here. I need to add more layers and specify which type of plot
+It’s blank since only the `aes()` or the aesthetic is
+present here. Adding more layers and specifying which type of plot
 to use.
 
 ``` r
@@ -128,9 +126,9 @@ ggplot(data = df,
 
 Also, it says we can drop the specifications for the `data=` and
 `mapping=` arguments as long as we supply the correct arguments in the
-correct order. Nice.
+correct order.
 
-Adding some colors
+Adding some colors.
 
 ``` r
 ggplot(df,
@@ -141,7 +139,7 @@ ggplot(df,
 ```
 
 ![](iris-dataset-analysis_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
-Adding a trend line since it’s a scatterplot, to see the correlation
+Adding a trend line since it’s a scatterplot to help see the correlation
 better.
 
 ``` r
@@ -159,12 +157,12 @@ ggplot(df,
 All three species appears to have a positive correlation for Petal
 length & width shown by the trend line going upwards.
 
-I can drop the `x=` and `y=` specifications too for the `aes()` method!
+I can drop the `x=` and `y=` specifications too for the `aes()` method
 
 ?aes()
 
 Also, ggplot uses layers so it can overlap multiple plots, from one
-dataset, or more! I’ll move the `aes()` inside the `geom_point` layer
+dataset, or more. I’ll move the `aes()` inside the `geom_point` layer
 which indicates that the data points will onlky be affected by the
 parameters we add in this `geom_point` layer and try some parameters
 
@@ -435,3 +433,9 @@ but I cannot conclude that these are erroneous data. Since I cannot
 gather more information about these “outlier” measurements for this
 dataset, I will assume they are correct data for now and for the rest of
 the box plots.
+
+## Conclusion
+
+- The petal measurements make it pretty easy to tell the iris species apart.  
+- The sepal measurements overlap a lot, so they’re not as helpful for separating species.  
+- Overall, the dataset shows how simple visualizations can highlight which features matter most when trying to classify or group data.
