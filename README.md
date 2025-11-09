@@ -1,13 +1,12 @@
-# R Case Studies: Iris, mtcars, and Formula 1 Data
+# R Case Studies: Iris and mtcars Datasets
 
 ## Overview
-This contains exploratory and statistical analyses using RStudio.  
-It showcases three case studies:
+This repository contains exploratory and statistical analyses using RStudio.  
+It showcases two classic datasets often used in data science education and practice:
 - **Iris Dataset**: Classification and visualization of flower species.
 - **mtcars Dataset**: Regression analysis and performance insights for car attributes.
-- **Formula 1 Dataset**: Race performance trends and driver/team comparisons.
 
-The goal is to demonstrate data cleaning, visualization, and modeling workflows in R, highlighting how R can be applied to both classic datasets and real-world sports data.
+The goal is to demonstrate data cleaning, visualization, and modeling workflows in R, highlighting how R can be applied to structured datasets for meaningful insights.
 
 ---
 
@@ -22,14 +21,12 @@ The goal is to demonstrate data cleaning, visualization, and modeling workflows 
 ## Results
 - **Iris Dataset**: Sepal length and petal width are strong predictors of species classification.  
 - **mtcars Dataset**: Weight and horsepower significantly affect fuel efficiency (mpg).  
-- **Formula 1 Dataset**: Performance differences across teams and drivers highlight competitive trends over time.  
 
 ---
 
 ## Dataset Sources
 - Iris dataset: Built-in R dataset  
 - mtcars dataset: Built-in R dataset  
-- Formula 1 dataset: Custom dataset included in repo  
 
 ---
 
@@ -39,7 +36,6 @@ The goal is to demonstrate data cleaning, visualization, and modeling workflows 
 You can view the rendered Markdown outputs directly on GitHub:
 - [Iris Analysis](./iris-dataset-analysis.md)  
 - [mtcars Analysis](./mtcars-data-anaysis.md)  
-- [F1 Analysis](./F1-data-analysis.Rmd)  
 
 ### Option 2: Run Locally
 1. Clone the repository:
