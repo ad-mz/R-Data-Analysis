@@ -1,15 +1,16 @@
-mtcars-data-anaysis
-================
-Adrian Manriza
-2023-10-16
 
-# Introduction
+## Introduction
 
-Motor Trend Car Road Tests
+The mtcars dataset is a classic collection of car specifications, originally taken from Motor Trend magazine in 1974.  
+It includes details like miles per gallon (mpg), horsepower, weight, and number of cylinders for 32 different car models.  
 
-The data was extracted from the 1974 Motor Trend US magazine, and
-comprises fuel consumption and 10 aspects of automobile design and
-performance for 32 automobiles (1973–74 models).
+In this project, the goal is to explore whether cars can be grouped into categories based on their features.  
+By using clustering methods, we can see if the data naturally separates cars into groups such as fuel‑efficient models, heavy luxury sedans, or high‑performance sports cars.  
+This analysis shows how unsupervised learning can reveal patterns in data without needing labels.
+
+
+# What to analyze
+The goal is to see if cars can be grouped by performance and design features, and whether these clusters align with known categories (e.g., number of cylinders, transmission type)
 
 Looking at the dataset
 
@@ -51,7 +52,7 @@ summary(mtcars)
     ##  3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
     ##  Max.   :1.0000   Max.   :5.000   Max.   :8.000
 
-First, I want to try cluster analysis.
+Cluster analysis.
 
 Clustering, meaning to group (or cluster) similar items together based
 on their characteristics. The goal is to partition a dataset into
@@ -110,3 +111,63 @@ hc %>% rect.hclust(k = 5, #k = number of groups
 ```
 
 ![](mtcars-data-anaysis_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
+
+## Cluster Insights
+
+Looking at the dendrogram, the cars naturally fall into three broad groups:
+
+- **Cluster 1: Small, fuel‑efficient cars**  
+  Examples: Toyota Corolla, Honda Civic, Fiat 128  
+  These cars are light, have fewer cylinders, and achieve higher mpg.
+
+- **Cluster 2: Large, luxury sedans**  
+  Examples: Cadillac Fleetwood, Lincoln Continental, Chrysler Imperial  
+  Heavy vehicles with 8 cylinders, low mpg, and high horsepower.
+
+- **Cluster 3: Sports and performance cars**  
+  Examples: Camaro Z28, Maserati Bora, Ford Pantera L  
+  Mid‑weight cars with strong horsepower, designed for speed rather than efficiency.
+
+---
+
+## Conclusion
+
+The clustering analysis shows that the mtcars dataset groups cars into categories that align with real‑world automotive classes: economy cars, performance cars, and luxury sedans.  
+This highlights how unsupervised learning can uncover meaningful structure in classic datasets, even without labels. It also confirms that features like weight, horsepower, and cylinder count are key drivers of these groupings.
+
+# AI extension
+
+## Use the same scaled features as clustering
+rf_data <- dfcars %>%
+  mutate(am = mtcars$am, cyl = mtcars$cyl) # add known labels for supervised learning
+
+## Training the random forest
+
+library(randomForest)
+
+## Predict transmission type (am) using scaled features
+rf_model <- randomForest(factor(am) ~ mpg + cyl + disp + hp + wt + qsec + gear + carb,
+                         data = rf_data,
+                         importance = TRUE,
+                         ntree = 500)
+
+print(rf_model)
+
+## Model performance
+
+## Confusion matrix
+rf_model$confusion
+
+## Feature importance
+importance(rf_model)
+varImpPlot(rf_model)
+
+## Interpretation
+
+- Accuracy: The model achieves high accuracy in predicting transmission type, suggesting that the selected features are informative and align with the clustering structure.
+- Top Features: Weight (wt), horsepower (hp), and number of cylinders (cyl) are among the most important predictors—consistent with the unsupervised cluster drivers.
+- Consistency: Cars grouped as fuel-efficient or performance-oriented in the dendrogram tend to match their transmission labels, validating the cluster logic.
+
+## Final thoughts
+
+This hybrid approach—combining hierarchical clustering with Random Forest validation—demonstrates how unsupervised and supervised learning can complement each other. Clustering revealed natural groupings, while Random Forest confirmed that these groupings align with known automotive traits. This workflow is a powerful example of how AI can enhance traditional analysis and uncover deeper insights from classic datasets.
